@@ -24,21 +24,34 @@ public class Main {
         MessagesReport messagesReport = objectMapper.readValue(inputFile, MessagesReport.class);
         List<ResponseDto> outputData = OutputDataPreparer.prepareData(messagesReport);
 
+        handleJsonFile(fileName, outputData);
+        handleXmlFile(fileName, outputData);
+        handleCsvFile(fileName, outputData);
+        handleYmlFile(fileName, outputData);
+    }
+
+    private static void handleJsonFile(String fileName, List<ResponseDto> outputData) {
         System.out.println("Read .json file: ");
         FileHandlerProcessor jsonProcessor = new JsonProcessor();
         jsonProcessor.writeToFile(fileName, outputData);
         System.out.println(jsonProcessor.readFromFile(fileName));
+    }
 
+    private static void handleXmlFile(String fileName, List<ResponseDto> outputData) {
         System.out.println("Read .xml file: ");
         FileHandlerProcessor xmlProcessor = new XmlProcessor();
         xmlProcessor.writeToFile(fileName, outputData);
         System.out.println(xmlProcessor.readFromFile(fileName));
+    }
 
+    private static void handleCsvFile(String fileName, List<ResponseDto> outputData) {
         System.out.println("Read .csv file: ");
         FileHandlerProcessor csvProcessor = new CsvProcessor();
         csvProcessor.writeToFile(fileName, outputData);
         System.out.println(csvProcessor.readFromFile(fileName));
+    }
 
+    private static void handleYmlFile(String fileName, List<ResponseDto> outputData) {
         System.out.println("Read .yml file: ");
         FileHandlerProcessor ymlProcessor = new YmlProcessor();
         ymlProcessor.writeToFile(fileName, outputData);

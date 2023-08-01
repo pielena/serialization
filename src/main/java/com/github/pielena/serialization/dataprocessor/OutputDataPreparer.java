@@ -8,6 +8,7 @@ import com.github.pielena.serialization.model.Message;
 import com.github.pielena.serialization.model.MessagesReport;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +36,7 @@ public class OutputDataPreparer {
         return chatSession.getMembers().stream()
                 .filter(member -> member.getHandleId() == message.getHandleId())
                 .map(Member::getLast)
-                .findFirst().orElse("");
+                .findFirst().orElse(null);
     }
 
     private static Map<String, List<NestedInfoDto>> getGroupedData(MessagesReport messagesReport) {
@@ -52,13 +53,11 @@ public class OutputDataPreparer {
                         .text(message.getText())
                         .build();
 
-                if (groupedData.containsKey(belongNumber)) {
-                    groupedData.get(belongNumber).add(nestedInfoDto);
-                } else {
-                    ArrayList<NestedInfoDto> nestedInfoList = new ArrayList<>();
-                    nestedInfoList.add(nestedInfoDto);
-                    groupedData.put(belongNumber, nestedInfoList);
-                }
+                groupedData.merge(belongNumber, new ArrayList<>(Arrays.asList(nestedInfoDto)), (l1, l2) -> {
+                    List<NestedInfoDto> resultList = new ArrayList<>(l1);
+                    resultList.addAll(l2);
+                    return resultList;
+                });
             }
         }
 

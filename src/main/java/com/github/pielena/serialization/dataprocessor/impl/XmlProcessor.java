@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.github.pielena.serialization.dataprocessor.FileHandlerProcessor;
 import com.github.pielena.serialization.dto.ResponseDto;
+import com.github.pielena.serialization.dto.XmlResponseDto;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,9 +17,10 @@ public class XmlProcessor implements FileHandlerProcessor {
     @Override
     public void writeToFile(String fileName, List<ResponseDto> outputData) {
         File file = new File(createPathString(fileName + ".xml"));
+        XmlResponseDto xmlResponseDto = new XmlResponseDto(outputData);
         XmlMapper xmlMapper = new XmlMapper();
         try {
-            xmlMapper.writerWithDefaultPrettyPrinter().writeValue(file, outputData);
+            xmlMapper.writerWithDefaultPrettyPrinter().writeValue(file, xmlResponseDto);
         } catch (IOException e) {
             e.printStackTrace();
         }
