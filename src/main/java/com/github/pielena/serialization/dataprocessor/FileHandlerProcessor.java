@@ -2,12 +2,13 @@ package com.github.pielena.serialization.dataprocessor;
 
 import com.github.pielena.serialization.dto.ResponseDto;
 
+import java.io.File;
 import java.util.List;
 
 public interface FileHandlerProcessor {
 
-    void writeToFile(String fileName, List<ResponseDto> outputData);
+    void writeToFile(File file, List<ResponseDto> outputData);
 
-    List<ResponseDto> readFromFile(String fileName);
+    List<ResponseDto> readFromFile(File file);
 
 }

@@ -15,15 +15,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.pielena.serialization.util.FilePathStringCreator.createPathString;
 import static com.github.pielena.serialization.mapper.ResponseCsvMapper.fromCsvDtoList;
 import static com.github.pielena.serialization.mapper.ResponseCsvMapper.toCsvDtoList;
 
 public class CsvProcessor implements FileHandlerProcessor {
 
     @Override
-    public void writeToFile(String fileName, List<ResponseDto> outputData) {
-        File file = new File(createPathString(fileName + ".csv"));
+    public void writeToFile(File file, List<ResponseDto> outputData) {
         List<CsvResponseDto> csvResponseDtoList = toCsvDtoList(outputData);
 
         CsvMapper mapper = new CsvMapper();
@@ -40,8 +38,7 @@ public class CsvProcessor implements FileHandlerProcessor {
     }
 
     @Override
-    public List<ResponseDto> readFromFile(String fileName) {
-        File file = new File(createPathString(fileName + ".csv"));
+    public List<ResponseDto> readFromFile(File file) {
         List<ResponseDto> responseDtoList = new ArrayList<>();
 
         CsvMapper mapper = new CsvMapper();

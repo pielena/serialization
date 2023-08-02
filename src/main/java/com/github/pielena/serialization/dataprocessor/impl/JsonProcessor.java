@@ -9,13 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static com.github.pielena.serialization.util.FilePathStringCreator.createPathString;
-
 public class JsonProcessor implements FileHandlerProcessor {
 
     @Override
-    public void writeToFile(String fileName, List<ResponseDto> outputData) {
-        File file = new File(createPathString(fileName + ".json"));
+    public void writeToFile(File file, List<ResponseDto> outputData) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, outputData);
@@ -25,8 +22,7 @@ public class JsonProcessor implements FileHandlerProcessor {
     }
 
     @Override
-    public List<ResponseDto> readFromFile(String fileName) {
-        File file = new File(createPathString(fileName + ".json"));
+    public List<ResponseDto> readFromFile(File file) {
         ObjectMapper objectMapper = new ObjectMapper();
         List<ResponseDto> responseDtoList = null;
         try {
